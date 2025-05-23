@@ -24,4 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/titi', function () {
+  return '្រកូល ឆាវ & ម៉ក់ Notifaction';
+});
+
 require __DIR__.'/auth.php';
