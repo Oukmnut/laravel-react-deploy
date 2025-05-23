@@ -2,6 +2,7 @@
 
 namespace App\Providers;
  
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
         Schema::defaultStringLength(191);
         Paginator::useBootstrap(); 
+        URL::forceHttps();
     }
 }
