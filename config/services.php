@@ -35,7 +35,6 @@ return [
         ],
     ],
     $client = new \GuzzleHttp\Client([
-        // 'verify' => 'https://github.com/Oukmnut/laravel-react-deploy/blob/master/cacert.pem', // path to the file you just saved
         'verify' => false,
     ]),
 

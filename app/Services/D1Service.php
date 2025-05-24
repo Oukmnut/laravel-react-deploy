@@ -15,6 +15,8 @@ class D1Service
         $this->apiKey = env('D1_API_KEY');
     }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  4d15eb8a-37b8-4583-aa86-06ed2430b73f  *******/
    public function getUsers()
     {
         $response = Http::withOptions([
