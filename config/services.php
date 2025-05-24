@@ -34,5 +34,17 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    $client = new \GuzzleHttp\Client([
+        'verify' => 'https://github.com/Oukmnut/laravel-react-deploy/cacert.pem', // path to the file you just saved
+        // 'verify' => false,
+    ]),
+
+   $response = $client->get(env('D1_API_BASE') . '/users', [
+        'headers' => [
+            'X-API-KEY' => env('D1_API_KEY'),
+        ]
+    ]),
+
+
 
 ];
