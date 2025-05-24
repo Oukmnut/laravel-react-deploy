@@ -2,32 +2,31 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class D1Service
 {
-    protected $client;
+    protected $baseUrl;
+    protected $apiKey;
 
     public function __construct()
     {
-        $this->client = new Client([
-            'verify' => false, // disable SSL verify if needed
-            'base_uri' => config('services.d1.base_url'),
-        ]);
+        $this->baseUrl = rtrim(env('D1_API_BASE'), '/'); // e.g. https://laravel-react-d1.oukmnut6.workers.dev
+        $this->apiKey = env('D1_API_KEY');              // your API key
     }
 
     public function getUsers()
     {
-        $response = $this->client->get('/users', [
-            'headers' => [
-                'X-API-KEY' => config('services.d1.api_key'),
-            ],
-        ]);
+        $response = Http::withHeaders([
+            'X-API-KEY' => $this->apiKey,
+        ])
+        ->withoutVerifying() // Disable SSL cert verification (use only for dev/testing)
+        ->get("{$this->baseUrl}/users");
 
-        if ($response->getStatusCode() === 200) {
-            return json_decode($response->getBody()->getContents(), true);
+        if ($response->successful()) {
+            return $response->json('results') ?? [];
         }
 
-        return null;
+        return [];
     }
 }
