@@ -2,34 +2,32 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class D1Service
 {
-    protected $baseUrl;
-    protected $apiKey;
+    protected $client;
 
     public function __construct()
     {
-        $this->baseUrl = rtrim(env('D1_API_BASE'), '/');
-        $this->apiKey = env('D1_API_KEY');
+        $this->client = new Client([
+            'verify' => false, // disable SSL verify if needed
+            'base_uri' => config('services.d1.base_url'),
+        ]);
     }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/*******  4d15eb8a-37b8-4583-aa86-06ed2430b73f  *******/
-   public function getUsers()
+    public function getUsers()
     {
-        $response = Http::withOptions([
-            'verify' => false,   // disable SSL cert check (local dev only)
-        ])->withHeaders([
-            'X-API-KEY' => $this->apiKey,
-        ])->get("{$this->baseUrl}/users");
+        $response = $this->client->get('/users', [
+            'headers' => [
+                'X-API-KEY' => config('services.d1.api_key'),
+            ],
+        ]);
 
-        if ($response->successful()) {
-            return $response->json('results');
+        if ($response->getStatusCode() === 200) {
+            return json_decode($response->getBody()->getContents(), true);
         }
 
         return null;
     }
-
 }
