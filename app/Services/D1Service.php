@@ -15,9 +15,11 @@ class D1Service
         $this->apiKey = env('D1_API_KEY');
     }
 
-    public function getUsers()
+   public function getUsers()
     {
-        $response = Http::withHeaders([
+        $response = Http::withOptions([
+            'verify' => false,   // disable SSL cert check (local dev only)
+        ])->withHeaders([
             'X-API-KEY' => $this->apiKey,
         ])->get("{$this->baseUrl}/users");
 
@@ -28,6 +30,4 @@ class D1Service
         return null;
     }
 
-    // You can add more methods like:
-    // public function createUser($data) { ... }
 }
