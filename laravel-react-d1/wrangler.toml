@@ -1,0 +1,11 @@
+name = "laravel-react-d1"
+main = "src/index.ts"
+compatibility_date = "2025-05-24"
+
+[bindings]
+type = "d1"
+name = "DB"
+database_name = "laravel_react_deploy"  # your D1 database name
+
+[vars]
+API_KEY = "8ec3a4c4-5732-4a4d-8bcb-17f16e285b72"  # your API key secret, or use Wrangler secret instead
